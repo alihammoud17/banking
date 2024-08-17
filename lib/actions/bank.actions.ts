@@ -12,7 +12,7 @@ import {
 import { plaidClient } from "@/lib/server/plaid";
 import { parseStringify } from "../utils";
 
-// import { getTransactionsByBankId } from "./transaction.actions";
+import { getTransactionsByBankId } from "./transaction.actions";
 import { getBanks, getBank } from "./user.actions";
 
 // Get multiple bank accounts
@@ -76,13 +76,9 @@ export const getAccount = async ({ appwriteItemId }: getAccountProps) => {
     const accountData = accountsResponse.data.accounts[0];
 
     // get transfer transactions from appwrite
-    // const transferTransactionsData = await getTransactionsByBankId({
-    //   bankId: bank.$id,
-    // });
-    const transferTransactionsData = {
-        documents: []
-    };
-  
+    const transferTransactionsData = await getTransactionsByBankId({
+      bankId: bank.$id,
+    });
 
     const transferTransactions = transferTransactionsData.documents.map(
       (transferData: Transaction) => ({
